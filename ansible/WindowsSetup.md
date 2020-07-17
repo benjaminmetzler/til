@@ -106,10 +106,9 @@ For Linux systems, you can use the ansible-playbook `-i` option with an IP addre
 <WINDOWS_HOSTNAME_OR_IP>
 ```
 
-#### Kick off ansible-playbook
-
+#### Test it out
 ```bash
-ansible-playbook -i windows_hosts configure_windows.yaml
+ansible all -i windows_hosts -m win_ping
 ```
 
 The contents of the playbook can contain the variables (see configure_windows.yaml) but ideally these would be abstracted into a group_vars file for Windows.
