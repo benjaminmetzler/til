@@ -1,8 +1,7 @@
 # Today I Leaned
+This is the closest thing I have to a blog at the moment.  It contains stuff that I'm learning about or playing around with.  
 
-Stolen from [Josh Branchaud](https://github.com/jbranchaud/til)
-
-
+The idea for this was taken from [Josh Branchaud](https://github.com/jbranchaud/til)
 
 
 
