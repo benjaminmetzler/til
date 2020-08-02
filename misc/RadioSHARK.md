@@ -1,14 +1,16 @@
 ![RadioSHARK](https://raw.githubusercontent.com/benjaminmetzler/til/main/misc/RadioSHARK-01.jpg "RadioSHARK")
 
-Back before radio stations streamed everything over the Internet you had to listen to, well, a radio.  And forget podcasts you could download on demand.  You had to listen to what was available in your local radio market.  If you wanted to listen to [someone talk with Thomas Jefferson](https://jeffersonhour.com/), you hoped your local NPR would broadcast it late at night so you could record it onto a cassette.
+Back before radio stations streamed everything over the Internet you had to listen to, well, a radio.  And forget podcasts where you could shows download on-demand.  You had to listen to what was available in your local radio market.  If you wanted to listen to [someone talk with Thomas Jefferson](https://jeffersonhour.com/), you hoped your local NPR would broadcast it late at night so you could record it onto a cassette.
 
-Then starting around 2004 companies realized there was a market for listening and recording radio onto your computer.  A couple jumped into the market of producing a low-cost radio receiver.  One of these was the [Griffin RadioSHARK](https://en.wikipedia.org/wiki/Radio_SHARK).  It offered a slick (at the time) looking USB receiver and software package that allowed you to schedule recording.  It was neat.  [I even wrote a review](https://www.osnews.com/story/8599/a-radioshark-review/) and created my own podcast feed generator to host up recorded shows.  It was fun.  Then podcasts and streaming services took over the world and I shoved my RadioSHARK into a closet and forgot about it.
+Then starting around 2004 companies realized there might be a market for listening and recording radio on your computer.  A couple jumped into the market of producing a low-cost radio receiver.  One of these was the [Griffin RadioSHARK](https://en.wikipedia.org/wiki/Radio_SHARK).  It offered a slick (at the time) looking USB receiver and software package that allowed you to schedule recording.  It was neat.  [I even wrote a review for it](https://www.osnews.com/story/8599/a-radioshark-review/) and created a php script to automatically generate podcasts feeds for the shows I recorded.  It was fun and I used it for a couple of years.  Then podcasts and streaming services took over the world so I shoved my RadioSHARK into a closet and forgot about it.
 
-I was looking for a network cable this week when I came across the RadioSHARK.  I had tried to play with it the last couple of years, but aside from janky first and third-party software, I had mixed success getting it working.  As I mentioned above podcasts and streaming services have made devices like the RadioSHARK obsolete.  But I was playing around with Raspberry Pis and had one acting as my VPN, so I thought could I use it to also stream from the RadioSHARK?  
+I was looking for a network cable this last week when I came across the RadioSHARK.  I had tried to play with it the last couple of years with some janky first and third-party software and I had mixed results.  As I mentioned abovem podcasts and streaming services have made devices like the RadioSHARK obsolete.  But I have been playing around with a Raspberry Pi and had one acting as my VPN, so I thought could I use it to also stream from the RadioSHARK?  Turns out I could pretty easily.
 
 ## Build shark.c
+The RadioSHARK shows up as both a USB serial port and a USB audio device.  The former is used to control the RadioSHARK, while the latter plays the audio.  Any application that can write to the USB serial port can control the RadioSHARK.  [shark.c](https://raw.githubusercontent.com/benjaminmetzler/til/main/misc/archive/shark.c) (and [shark2.c](https://raw.githubusercontent.com/benjaminmetzler/til/main/misc/archive/shark2.c)) is a simple utility to send commands to the RadioSHARK.  It is over 13 years old, so getting it to build on a modern Linux system is a bit of an adventure.  
+
 ### Install old version of libhid
-Newer versions of libhid don't seem to play nicely with shark.c so an older version is needed.  I started with [this webpage](https://github.com/packetgeek/radioshark-v1-rpi) build and install version 0.2.16 of libhid.  
+Newer versions of libhid don't seem to play nicely with shark.c so an older version is needed.  I started with [this webpage](https://github.com/packetgeek/radioshark-v1-rpi) to build and install version 0.2.16 of libhid.  
 
 1. Download and untar/zip the libhid code.  
   `wget http://sources.openelec.tv/mirror/libhid/libhid-0.2.16.tar.gz`
@@ -35,9 +37,9 @@ You should be able to control the RadioSHARK with the shark binary.  Try this ou
 This will turn off the blue LED (on by default) and then turn on the red.  If this returns without an error, congratulations you can control your RadioSHARK.
 
 ## Streaming the RadioSHARK
-Next you need to set up some sort of streaming interface.  Following the instructions [here](https://maker.pro/raspberry-pi/projects/how-to-build-an-internet-radio-station-with-raspberry-pi-darkice-and-icecast) you can set up an IceCast server.  
+Next you need to set up some sort of streaming interface.  As mentioned above, the RadioSHARK shows up as a USB audio device on Linux.  As a result, any software that can "receive" from an audio source should be able to play what ever the RadioSHARK is sending.  Following the instructions [here](https://maker.pro/raspberry-pi/projects/how-to-build-an-internet-radio-station-with-raspberry-pi-darkice-and-icecast) you can set up an IceCast server that will stream the RadioSHARK audio via DarkIce.
 
-### install Darkice
+### install DarkIce
 Darkice takes the audio coming from an audio device and streams it through Icecast
 ```shell
 sudo apt install libmp3lame0 libtwolame0 darkice
