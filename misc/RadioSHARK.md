@@ -7,6 +7,8 @@ Then starting around 2004 companies realized there might be a market for listeni
 Earlier this week I was looking for a network cable when I came across the slightly yellowed RadioSHARK.  I had played with it off an on the last couple of years but janky first and third-party software gave me mixed results.  As I mentioned abovem podcasts and streaming services have made devices like the RadioSHARK obsolete.  But I have been playing around with a Raspberry Pi and had one acting as my VPN, so I wondered if I could hook up my RadioSHARK and stream radio over my network.  Turns out it's pretty easy.
 
 ## Build shark.c
+> **_NOTE:_**  I wrote up a python script to handle the RadioSHARK so you can skip installing the older version of libhid or compiling shark.c.  Find the script [here](https://github.com/benjaminmetzler/shark.py)
+
 The RadioSHARK shows up as both a USB serial port and a USB audio device.  The former is used to control the RadioSHARK, while the latter plays the audio.  Any application that can write to the USB serial port can control the RadioSHARK (with the right protocol).  [shark.c](https://raw.githubusercontent.com/benjaminmetzler/til/main/misc/archive/shark.c) (and [shark2.c](https://raw.githubusercontent.com/benjaminmetzler/til/main/misc/archive/shark2.c)) is a utility for sending commands to the RadioSHARK.  It is over 13 years old, so getting it to build on a modern Linux system is a bit of an adventure.
 
 ### Install old version of libhid
@@ -26,7 +28,7 @@ First you need to install libhid.  Newer versions of libhid don't seem to play n
   ldconfig
   ```
 
-### compile shark.c
+### Compile shark.c
 ```shell
 gcc -g -o ./shark -lhid shark.c
 mv 
@@ -39,19 +41,19 @@ This will turn off the blue LED (on by default) and then turn on the red.  If th
 ## Streaming the RadioSHARK
 Next you need to set up some sort of streaming interface.  As mentioned above, the RadioSHARK shows up as a USB audio device on Linux.  As a result, any software that can "receive" from an audio source should be able to play what ever the RadioSHARK is sending.  Following the instructions [here](https://maker.pro/raspberry-pi/projects/how-to-build-an-internet-radio-station-with-raspberry-pi-darkice-and-icecast) you can set up an IceCast server that will stream the RadioSHARK audio via DarkIce.
 
-### install DarkIce
+### Install DarkIce
 Darkice takes the audio coming from an audio device and streams it through Icecast
 ```shell
 sudo apt install libmp3lame0 libtwolame0 darkice
 ```
 
-### install IceCast
+### Install IceCast
 ```shell
 sudo apt install icecast2
 ```
 I accepted the defaults for the wizard, including the passwords. 
 
-### Creat Create a darkice configuration file 
+### Create a darkice configuration file 
 ```shell
 [general]
 duration        = 0      # duration in s, 0 forever
@@ -75,18 +77,18 @@ mountPoint      = rapi.mp3  # mount point on the IceCast2 server .mp3 or .ogg
 name            = Raspberry Pi
 ```
 
-### start the icecast2 server
+### Start the icecast2 server
 ```shell
 sudo service icecast2 start
 ```
 
-### start darkcast 
+### Start darkcast 
 ```shell
 sudo /usr/bin/darkice -c /home/pi/darkice.cfg
 ```
 
 
-## Streaming and Tuning
+## Streaming and tuning
 At this point the icecast webserver should be running at `http://<RASPBERRY_IP>:8000`.  If you play the M3U file, it should connect to Raspberry Pi and start streaming from the RadioSHACK.  You can connect directly to the stream at `http://<RASPBERRY_IP>:8000/rapi.mp3`. You can't tune the RadioSHARK through the interface but you can ssh into the pi and tune your favorite station by running `sudo shark -fm 91.5` (assuming you have a 91.5 station).  It can take a couple of seconds before the stream is updated.
 
 Of course you probably don't have a RadioSHARK sitting in a closet someplace.  Your best bet is the used market like eBay, [where I see them come up from time-to-time.](https://www.ebay.com/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=radioshark+usb&_sacat=0&LH_TitleDesc=0&_osacat=0&_odkw=radioshark).  
