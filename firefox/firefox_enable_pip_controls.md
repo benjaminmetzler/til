@@ -18,4 +18,6 @@ The keys allowed are:
 
 Accel is Ctrl Key on Windows and Linux or the Command Key on macOS
 
+One nice things about this is that with videos that don't have native controls, the Firefox PIP keyboard shortcuts will still work.
+
 
