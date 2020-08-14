@@ -1,7 +1,9 @@
 
 ## Windows Client Setup
+Ansible works with any Linux distro with ssh enabled.  For Windows there are two options.  First is to install the experimental OpenSSH server for Windows and then use Ansible via ssh.  The other is to use WinRM.  Set up for the latter is documented below.
 
 #### Enable WinRM for Ansible
+First enable WinRM on the target Windows systems
 
 ```powershell
 $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
@@ -31,6 +33,8 @@ Note the thumbprint for use in the next step.
 
 
 #### Set up WinRM Listener
+Start the WinRM Listener.
+
 ```powershell
 $selector_set = @{
     Address = "*"
@@ -93,6 +97,8 @@ Winrs
 > **_NOTE:_**  Ansible on a macos server gives an error about not finding pywinrm.  This is still under investigation.  The below was tested on an Ubuntu 20.04 ansible server.
 
 #### Install PyWinRM (if not installed)
+On your Ansible server, install the PyWinRM module.  
+
 ```bash
 pip install "pywinrm>=0.3.0"
 ```
@@ -107,6 +113,8 @@ For Linux systems, you can use the ansible-playbook `-i` option with an IP addre
 ```
 
 #### Test it out
+Use win_ping to verify that your Windows targets will respond.
+
 ```bash
 ansible all -i windows_hosts -m win_ping
 ```
