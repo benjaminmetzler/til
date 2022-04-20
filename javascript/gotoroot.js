@@ -1,4 +1,4 @@
-// var url = new String(location.href);
+var url = new String(location.href);
 var re = new RegExp('(https?:\/\/)([a-zA-Z0-9.]+)((\/r\/.*\/)(comments.*))?');
 var res = url.match(re);
 // go to the root URL
