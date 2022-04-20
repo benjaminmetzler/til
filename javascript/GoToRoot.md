@@ -9,7 +9,7 @@ Just drag the bookmarklet up to your toolbar and it should just work.
 
 The above is an encoded string so it can be added to a bookmark, but the unencoded form can be found below.
 
-```javascript
+``` javascript
 // Grab the URL from the browser
 var url = new String(location.href);
 
