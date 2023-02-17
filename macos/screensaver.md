@@ -6,6 +6,6 @@ To get around this do the following:
 
 1. Create an Automator Quick Action action called `Start Screen Saver` to call the `Start Screen Saver` action with `no input`.
 1. Create a new keyboard shortcut called `Lock Screen` and assign it to `ctrl-alt-shift-cmd-q`.  This allows the mapping in the next step as there is a hidden shortcut to `cmd-ctrl-q` and creating a new one overrides that one.
-1. Create a keyboard shortcut with `cmd-ctrl-q` to launch the Automator action.
+1. Create a keyboard shortcut with `cmd-ctrl-q` to launch the Automator action by going to System Preferences > Keyboard > Shortcuts. Select Services from the sidebar and then add a shortcut to the `Start Screen Saver` action.
 
 Yes, I could use a hot corner to activate the mouse, but I do most of my interaction with a computer via a keyboard, so when I step away from my laptop I just hit a keyboard combination.  By remapping Lock Screen to an alternate hotkey, I can use it on Macs without the automator action.
