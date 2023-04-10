@@ -1,0 +1,14 @@
+# How to capture and decord IR commands with an FLIRC
+
+`flirc_util device_log --ir -p`
+
+This will output text like the below:
+
+``` text
+:e:31234
+0,9069,4440,619,480,614,484,615,1591,619,480,614,484,615,480,619,480,619,480,614,1591,619,1586,619,480,619,1586,619,1590,619,1587,619,1591,619,1586,619,480,619,1586,619,1591,619,1587,619,480,619,480,619,1586,619,1587,623,1586,619,480,619,480,618,476,619,1590,619,1587,619,480,619,479,620
+:e:41
+0,9069,2172,618
+```
+
+The comma separated strings are the IR codes that the FLIRC captured.
