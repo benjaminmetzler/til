@@ -1,6 +1,6 @@
 # Downconvert an audio file
 
-`ffmpeg -i <INPUT_FILE> -ab 96k -map_metadata 0 -c:v copy <OUTPUT_FILE>`
+`ffmpeg -i <INPUT_FILE> -ab 96k -map_metadata 0 -vn <OUTPUT_FILE>`
 
 `ffmpeg`: This is the command that invokes the FFmpeg utility.
 
